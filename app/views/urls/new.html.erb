@@ -1,0 +1,5 @@
+<%= form_with model: @url, url: urls_path do |f| %>
+    <%= f.label :original_url, "Enter URL" %>
+    <%= f.text_field :original_url %>
+    <%= f.submit "Shorten" %>
+<% end %>
