@@ -1,13 +1,15 @@
 class UrlsController < ApplicationController
     def new
         @url = Url.new
+        @urls = Url.order(created_at: :desc)
     end
   
     def create
         @url = Url.new(url_params)
         if @url.save
-            render :show
+            redirect_to new_url_path, notice: 'URL was successfully shortened.'
         else
+            @urls = Url.order(created_at: :desc)
             render :new
         end
     end

@@ -1,5 +1,45 @@
-<%= form_with model: @url, url: urls_path do |f| %>
-    <%= f.label :original_url, "Enter URL" %>
-    <%= f.text_field :original_url %>
-    <%= f.submit "Shorten" %>
+<h1>Enter URL to Shorten</h1>
+
+<%= form_with(model: @url, local: true) do |form| %>
+  <% if @url.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@url.errors.count, "error") %> prohibited this url from being saved:</h2>
+
+      <ul>
+        <% @url.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :original_url %>
+    <%= form.text_field :original_url %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
 <% end %>
+
+<h2>Shortened URLs</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Original URL</th>
+      <th>Shortened URL</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @urls.each do |url| %>
+      <tr>
+        <td><%= url.id %></td>
+        <td><%= url.original_url %></td>
+        <td><%= link_to url.short_url, url.short_url, target: "_blank" %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
