@@ -55,3 +55,6 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
+
+# To obtain location based on clicks
+gem 'geocoder'

@@ -16,16 +16,26 @@ class UrlsController < ApplicationController
   
     def show
         @url = Url.find_by(short_url: params[:short_url])
+        if @url.nil?
+            render plain: "URL not found", status: 404
+        else
+            @location = Geocoder.search(request.remote_ip).first
+        end
     end
   
     def redirect
         @url = Url.find_by(short_url: params[:short_url])
         if @url
             track_visit(@url)
-            redirect_to @url.original_url
+            redirect_to @url.original_url, allow_other_host: true
         else
             render plain: "URL not found", status: 404
-        end
+      end
+    end
+  
+    def report
+        @url = Url.find(params[:id])
+        @visits = @url.visits.order(clicked_at: :desc)
     end
   
     private
@@ -35,12 +45,8 @@ class UrlsController < ApplicationController
     end
   
     def track_visit(url)
-        url.visits.create(geolocation: request.location.country, clicked_at: Time.current)
-    end
-
-    def report
-        @url = Url.find(params[:id])
-        @visits = @url.visits.order(clicked_at: :desc)
+        location = Geocoder.search(request.remote_ip).first
+        country = location ? location.country : "Unknown"
+        url.visits.create(geolocation: country, clicked_at: Time.current)
     end
 end
-  

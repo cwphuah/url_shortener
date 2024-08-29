@@ -31,6 +31,7 @@
       <th>ID</th>
       <th>Original URL</th>
       <th>Shortened URL</th>
+      <th>Location</th>
     </tr>
   </thead>
   <tbody>
@@ -39,6 +40,13 @@
         <td><%= url.id %></td>
         <td><%= url.original_url %></td>
         <td><%= link_to url.short_url, url.short_url, target: "_blank" %></td>
+        <td>
+          <% if url.visits.any? %>
+            <%= url.visits.last.geolocation %>
+          <% else %>
+            Not available
+          <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>
