@@ -31,7 +31,7 @@
       <th>ID</th>
       <th>Original URL</th>
       <th>Shortened URL</th>
-      <th>Location</th>
+      <th>Actions</th>
     </tr>
   </thead>
   <tbody>
@@ -41,11 +41,8 @@
         <td><%= url.original_url %></td>
         <td><%= link_to url.short_url, url.short_url, target: "_blank" %></td>
         <td>
-          <% if url.visits.any? %>
-            <%= url.visits.last.geolocation %>
-          <% else %>
-            Not available
-          <% end %>
+          <%= link_to 'View Report', report_url_path(url) %>
+          <%= link_to 'Delete', url_path(url), method: :delete, data: { confirm: 'Are you sure?' } %>
         </td>
       </tr>
     <% end %>
