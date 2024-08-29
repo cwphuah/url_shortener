@@ -39,7 +39,7 @@
       <tr>
         <td><%= url.id %></td>
         <td><%= url.original_url %></td>
-        <td><%= link_to url.short_url, url.short_url, target: "_blank" %></td>
+        <td><%= link_to short_url(url.short_url), short_url(url.short_url), target: "_blank" %></td>
         <td>
           <%= link_to 'View Report', report_url_path(url) %>
           <%= link_to 'Delete', url_path(url), method: :delete, data: { confirm: 'Are you sure?' } %>
