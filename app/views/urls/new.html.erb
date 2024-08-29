@@ -1,50 +1,94 @@
-<h1>Enter URL to Shorten</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>URL Shortener</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    /* Custom CSS */
+    body {
+      background-color: #f8f9fa;
+    }
+    .container {
+      margin-top: 50px;
+    }
+    .card {
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .btn-primary {
+      background-color: #007bff;
+      border-color: #007bff;
+    }
+    .table th, .table td {
+      vertical-align: middle;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="card">
+          <h1 class="text-center">Enter URL to Shorten</h1>
 
-<%= form_with(model: @url, local: true) do |form| %>
-  <% if @url.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@url.errors.count, "error") %> prohibited this url from being saved:</h2>
+          <%= form_with(model: @url, local: true, class: "mt-4") do |form| %>
+            <% if @url.errors.any? %>
+              <div id="error_explanation" class="alert alert-danger">
+                <h4 class="alert-heading"><%= pluralize(@url.errors.count, "error") %> prohibited this URL from being saved:</h4>
+                <ul>
+                  <% @url.errors.full_messages.each do |message| %>
+                    <li><%= message %></li>
+                  <% end %>
+                </ul>
+              </div>
+            <% end %>
 
-      <ul>
-        <% @url.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
+            <div class="form-group">
+              <%= form.label :original_url %>
+              <%= form.text_field :original_url, class: "form-control", placeholder: "Enter your URL here" %>
+            </div>
+
+            <div class="form-group text-center">
+              <%= form.submit "Shorten URL", class: "btn btn-primary" %>
+            </div>
+          <% end %>
+        </div>
+
+        <div class="card mt-4">
+          <h2 class="text-center">Shortened URLs</h2>
+
+          <table class="table table-striped mt-3">
+            <thead class="thead-dark">
+              <tr>
+                <th>ID</th>
+                <th>Original URL</th>
+                <th>Shortened URL</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @urls.each do |url| %>
+                <tr>
+                  <td><%= url.id %></td>
+                  <td><%= url.original_url %></td>
+                  <td><%= link_to short_url(url.short_url), short_url(url.short_url), target: "_blank" %></td>
+                  <td>
+                    <%= link_to 'View Report', report_url_path(url), class: "btn btn-info btn-sm" %>
+                    <%= link_to 'Delete', url_path(url), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-sm" %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
-  <% end %>
-
-  <div class="field">
-    <%= form.label :original_url %>
-    <%= form.text_field :original_url %>
   </div>
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
-<% end %>
-
-<h2>Shortened URLs</h2>
-
-<table>
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Original URL</th>
-      <th>Shortened URL</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @urls.each do |url| %>
-      <tr>
-        <td><%= url.id %></td>
-        <td><%= url.original_url %></td>
-        <td><%= link_to short_url(url.short_url), short_url(url.short_url), target: "_blank" %></td>
-        <td>
-          <%= link_to 'View Report', report_url_path(url) %>
-          <%= link_to 'Delete', url_path(url), method: :delete, data: { confirm: 'Are you sure?' } %>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
