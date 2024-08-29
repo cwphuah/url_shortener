@@ -58,3 +58,6 @@ end
 
 # To obtain location based on clicks
 gem 'geocoder'
+
+# To use PostgreSQL as the database in production
+gem 'pg', '>= 0.18', '< 2.0'
