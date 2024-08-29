@@ -1,0 +1,13 @@
+<h2>Usage Report for <%= @url.short_url %></h2>
+<table>
+  <tr>
+    <th>Click Timestamp</th>
+    <th>Geolocation</th>
+  </tr>
+  <% @visits.each do |visit| %>
+    <tr>
+      <td><%= visit.clicked_at %></td>
+      <td><%= visit.geolocation %></td>
+    </tr>
+  <% end %>
+</table>
