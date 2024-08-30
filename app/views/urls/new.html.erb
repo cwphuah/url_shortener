@@ -77,7 +77,6 @@
                   <td><%= link_to short_url(url.short_url), short_url(url.short_url), target: "_blank" %></td>
                   <td>
                     <%= link_to 'View Report', report_url_path(url), class: "btn btn-info btn-sm" %>
-                    <%= link_to 'Delete', url_path(url), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-sm" %>
                   </td>
                 </tr>
               <% end %>
