@@ -1,6 +1,6 @@
 # URL Shortener
 
-A simple URL shortener application built with Ruby on Rails.
+A simple URL shortener application built with Ruby on Rails. It is currently deployed on https://url-shortener-csai.onrender.com/.
 
 ## Table of Contents
 
